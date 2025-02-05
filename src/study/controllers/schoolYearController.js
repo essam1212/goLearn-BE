@@ -27,7 +27,7 @@ export const addYear = async (req, res) => {
         message: `The following subjects were not found: ${notFound.join(",")}`,
       });
     }
-
+ 
     // الحصول على IDs المواد
     const subjectIds = foundSubjects.map((subject) => subject._id);
 

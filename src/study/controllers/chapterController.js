@@ -48,12 +48,12 @@ export const addChapter = async (req, res) => {
 
 export const updateChapter = async (req, res) => {
   const { year, subjectName, title } = req.body;
-  const { id } = req.params;
+  const { id } = req.params; 
   // try {
     const chapter = await Chapter.findById(id);
 
     if (!chapter) {
-      return res.status(404).json({ message: "Chapter not found." });
+      return res.status(404).json({ message: "Chapter not found." }); 
     }
     if (year) {
       const schoolYear = await SchoolYear.findOne({ year });

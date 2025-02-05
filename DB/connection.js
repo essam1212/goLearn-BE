@@ -1,10 +1,16 @@
 import mongoose from 'mongoose'
 
 const connectDB  = async ()=>{
-    return await mongoose.connect(process.env.DBURI )
-    .then(res=>console.log(`DB Connected successfully on .........${process.env.DBURI} `))
-    .catch(err=>console.log(` Fail to connect  DB.........${err} `))
+  
+    return await mongoose.connect(`${process.env.DBURI}`)
+    .then(() => {
+      // لو الاتصال تم بنجاح
+      console.log('Connected to MongoDB'); // ممكن تعرض أي رسالة هنا
+    })
+    .catch((error) => {
+      // لو حصل مشكلة في الاتصال
+      console.error('Error connecting to MongoDB:', error);
+    });
 }
 
-
-export default connectDB;
+export default connectDB;   

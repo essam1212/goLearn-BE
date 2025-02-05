@@ -7,4 +7,4 @@ const router = express.Router();
 router.post('/add-subject',validation(add),subject.createSubject)
 
 
-export default router;   
+export default router;    

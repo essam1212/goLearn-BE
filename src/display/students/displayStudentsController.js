@@ -5,7 +5,6 @@ import { Lesson } from "../../../DB/model/Lesson.js";
 import { SchoolYear } from "../../../DB/model/SchoolYear.js";
 import { Subject } from "../../../DB/model/Subject.js";
 import { Teacher } from "../../../DB/model/Teacher.js";
-import { correctEssayAnswer } from "./correctEssayAnswer.js";
 export const allSubjects = async (req, res) => {
   try {
     const { year, section, division } = req.student;
@@ -131,7 +130,7 @@ export const examAnswer = async (req, res) => {
   const studentId = req.student._id; // تعديل اسم الحقل هنا للتوحيد
   const { answers } = req.body;
 
-  // try {
+  try {
     // هات الأسئلة الخاصة بالامتحان
     const exam = await Exam.findById({ _id: examId });
 
@@ -159,30 +158,7 @@ export const examAnswer = async (req, res) => {
           .json({ message: `السؤال غير موجود` });
       }
 
-      // تصحيح الإجابة هنا بناء على نوع السؤال
-      let grade = 0;
-      if (question.type === "mcq" && question.correctAnswer === answer.answer) {
-        grade = question.grade; 
-
-      } else if (question.type === "essay") {
-
-        console.log("question.correctAnswer:", question.correctAnswer);
-        console.log("answer:", answer);
-      
-        if (question.correctAnswer && answer.answer) {
-          const { grade: essayGrade } = correctEssayAnswer(question.correctAnswer, answer.answer, question.grade);
-          grade = essayGrade; // استخدم essayGrade هنا
-        } else {
-          // التعامل مع الحالة عندما تكون القيم غير موجودة
-          if (!question.correctAnswer) {
-            console.error("correctAnswer is missing");
-          }
-          if (!answer.answer) {
-            console.error("studentAnswer is missing");
-          }
-        }
-
-      }
+     
 
       return { questionId: question._id, answer: answer.answer, grade };
     });
@@ -192,10 +168,10 @@ export const examAnswer = async (req, res) => {
     await exam.save();
 
     return res.status(200).json({ message: "تم حفظ الإجابات مع التصحيح بنجاح" });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: "حدث خطأ أثناء حفظ الإجابات",error:error.message });
-  // }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "حدث خطأ أثناء حفظ الإجابات",error:error.message });
+  }
 };
 
 

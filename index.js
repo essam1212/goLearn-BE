@@ -13,6 +13,8 @@ const baseUrl = process.env.BASEURL
 
 app.use(cors());
 app.use(bodyParser.json());
+// home 
+app.get('/',(req,res)=>{res.send('welcome to our api')}) 
 // api auth
 app.use(`${baseUrl}/auth/student`, indexRouter.authStudentRouter)
 app.use(`${baseUrl}/auth/teacher`, indexRouter.authTeacherRouter)
