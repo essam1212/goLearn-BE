@@ -8,7 +8,7 @@ import * as indexRouter from './src/index.router.js'
 dotenv.config()
 
 const app = express();
-const PORT = process.env.PORT ;
+const PORT = 3000||process.env.PORT ;
 const baseUrl = process.env.BASEURL
 
 app.use(cors());
