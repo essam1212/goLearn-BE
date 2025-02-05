@@ -11,10 +11,11 @@ const app = express();
 const PORT = 3000||process.env.PORT ;
 const baseUrl = process.env.BASEURL
 
+
 app.use(cors());
 app.use(bodyParser.json());
 // home 
-app.get('/',(req,res)=>{res.send('welcome to our api')}) 
+app.get('/',(req,res)=>{res.json({message:'welcome to our api'})}) 
 // api auth
 app.use(`${baseUrl}/auth/student`, indexRouter.authStudentRouter)
 app.use(`${baseUrl}/auth/teacher`, indexRouter.authTeacherRouter)
@@ -33,7 +34,7 @@ app.use(`${baseUrl}/display/assistants`, indexRouter.displayAssistant)
 
 connectDB()
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on https://go-learn-murex.vercel.app:${PORT}`);
   });
 
   
