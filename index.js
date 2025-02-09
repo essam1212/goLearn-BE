@@ -24,7 +24,7 @@ app.use(`${baseUrl}/auth/assistant`, indexRouter.authAssistantRouter)
 app.use(`${baseUrl}/study/schoolYear`, indexRouter.schoolYearRouter)
 app.use(`${baseUrl}/study/lesson`, indexRouter.lessonRouter)
 app.use(`${baseUrl}/study/chapter`, indexRouter.chapterRouter)
-app.use(`${baseUrl}/study/subject`, indexRouter.subjectRouter)
+app.use(`study/subject`, indexRouter.subjectRouter)
 app.use(`${baseUrl}/study/exam`, indexRouter.examRouter)
 // api display
 app.use(`${baseUrl}/display/students`, indexRouter.displayStudents) 
