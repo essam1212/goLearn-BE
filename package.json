@@ -8,14 +8,17 @@
  
   "type": "module",
  
-  "scripts": { 
-  
+  "scripts": {
+ 
+   
   "test": "echo \"Error: no test specified\" && exit 1"
  
   },
+ 
   "engines": {
  
-    "node": ">=14.0.0"
+   
+  "node": ">=14.0.0"
  
   },
  
@@ -69,7 +72,7 @@
   "nodemailer": "^6.9.15",
  
    
-  "nodemon": "^3.1.7",
+  "nodemon": "^3.1.9",
  
    
   "string-similarity": "^4.0.4",

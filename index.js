@@ -34,7 +34,7 @@ app.use(`${baseUrl}/display/assistants`, indexRouter.displayAssistant)
 
 connectDB()
 app.listen(PORT, () => {
-    console.log(`Server is running on https://go-learn-murex.vercel.app:${PORT}`);
+    console.log(`Server is running on `);
   });
 
   

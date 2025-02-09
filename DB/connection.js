@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const connectDB  = async ()=>{
   
-    return await mongoose.connect(`${process.env.DBURI}`)
+    return await mongoose.connect(`${process.env.DBURL}`)
     .then(() => {
       // لو الاتصال تم بنجاح
       console.log('Connected to MongoDB'); // ممكن تعرض أي رسالة هنا
