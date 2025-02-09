@@ -1,7 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const connectDB  = async ()=>{
-  
+const connectDB = async () => {
     return await mongoose.connect(`${process.env.DBURL}`)
     .then(() => {
       // لو الاتصال تم بنجاح
@@ -13,4 +12,4 @@ const connectDB  = async ()=>{
     });
 }
 
-export default connectDB;   
+export default connectDB;
