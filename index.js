@@ -8,7 +8,7 @@ import * as indexRouter from './src/index.router.js';
 dotenv.config();
 
 export const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000||process.env.PORT ;
 const baseUrl = process.env.BASEURL;
 
 app.use(cors());
@@ -31,7 +31,9 @@ app.use(`${baseUrl}/display/teachers`, indexRouter.displayTeacher);
 app.use(`${baseUrl}/display/assistants`, indexRouter.displayAssistant);
 
 connectDB();
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
+export default app;
 
+ 
