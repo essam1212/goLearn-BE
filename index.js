@@ -31,9 +31,9 @@ app.use(`${baseUrl}/display/teachers`, indexRouter.displayTeacher);
 app.use(`${baseUrl}/display/assistants`, indexRouter.displayAssistant);
 
 connectDB();
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 export default app;
 
  
