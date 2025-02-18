@@ -6,7 +6,6 @@
     import * as indexRouter from './src/index.router.js';
 
     dotenv.config();
-    console.log("Base URL:", process.env.BASEURL);
 
     export const app = express();
     const PORT = process.env.PORT||3000 ;
