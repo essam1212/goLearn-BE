@@ -64,8 +64,9 @@ export const confirmEmail = async (req, res) => {
     }
     student.isVerified = true;
     await student.save();
-    res.redirect("https://go-learn-henna.vercel.app/Login");
-  } catch (err) {
+    res.writeHead(302, { Location: "https://go-learn-henna.vercel.app/Login" });
+    res.end();
+    } catch (err) {
     res.status(500).json({ message: "Invalid or expired token" });
   }
 };
