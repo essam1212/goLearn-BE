@@ -9,7 +9,6 @@
 
     export const app = express();
     const PORT = process.env.PORT||3000 ;
-    const baseUrl = process.env.BASEURL;
 
     app.use(cors());
     app.use(bodyParser.json());

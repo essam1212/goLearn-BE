@@ -38,7 +38,10 @@ export const signup = async (req, res) => {
         expiresIn: "1d",
       });
       const verificationLink = `${req.protocol}://${req.headers.host}${process.env.baseUrl}/auth/verify-email/${token}`;
-      await sendEmail(email, "تأكيد الحساب", verificationLink);
+      const emailContent = `
+      <p>قم بالضغط <a href="${verificationLink}">هنا</a> لتأكيد الحساب.</p>
+    `;
+    await sendEmail(email, "تأكيد الحساب", emailContent);
       res.status(201).json({
         message:
           "تم انشاء الحساب بنجاح برجاء الذهاب الي بريدك الالكتروني لتاكيد الحساب ",
@@ -61,7 +64,7 @@ export const confirmEmail = async (req, res) => {
     }
     student.isVerified = true;
     await student.save();
-    res.status(200).json({ message: "Email verified successfully" });
+    res.redirect("https://go-learn-henna.vercel.app/Login");
   } catch (err) {
     res.status(500).json({ message: "Invalid or expired token" });
   }
