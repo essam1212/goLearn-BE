@@ -16,19 +16,19 @@
     // home 
     app.get('/', (req, res) => { res.json({ message: 'welcome to our api' }) });
     // api auth
-    app.use(`${baseUrl}/auth/student`, indexRouter.authStudentRouter);
-    app.use(`${baseUrl}/auth/teacher`, indexRouter.authTeacherRouter);
-    app.use(`${baseUrl}/auth/assistant`, indexRouter.authAssistantRouter);
+    app.use(`/api/v1/auth/student`, indexRouter.authStudentRouter);
+    app.use(`/api/v1/auth/teacher`, indexRouter.authTeacherRouter);
+    app.use(`/api/v1/auth/assistant`, indexRouter.authAssistantRouter);
     // api study
-    app.use(`${baseUrl}/study/schoolYear`, indexRouter.schoolYearRouter);
-    app.use(`${baseUrl}/study/lesson`, indexRouter.lessonRouter);
-    app.use(`${baseUrl}/study/chapter`, indexRouter.chapterRouter);
+    app.use(`/api/v1/study/schoolYear`, indexRouter.schoolYearRouter);
+    app.use(`/api/v1/study/lesson`, indexRouter.lessonRouter);
+    app.use(`/api/v1/study/chapter`, indexRouter.chapterRouter);
     app.use(`/api/v1/study/subject`, indexRouter.subjectRouter);
-    app.use(`${baseUrl}/study/exam`, indexRouter.examRouter);
+    app.use(`/api/v1/study/exam`, indexRouter.examRouter);
     // api display
-    app.use(`${baseUrl}/display/students`, indexRouter.displayStudents);
-    app.use(`${baseUrl}/display/teachers`, indexRouter.displayTeacher);
-    app.use(`${baseUrl}/display/assistants`, indexRouter.displayAssistant);
+    app.use(`/api/v1/display/students`, indexRouter.displayStudents);
+    app.use(`/api/v1/display/teachers`, indexRouter.displayTeacher);
+    app.use(`/api/v1/display/assistants`, indexRouter.displayAssistant);
 
     connectDB();
     app.listen(PORT, () => {
