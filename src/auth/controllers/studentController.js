@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
       const token = jwt.sign({ id: newStudent._id }, process.env.emailToken, {
         expiresIn: "1d",
       });
-      const verificationLink = `${req.protocol}://${req.headers.host}/api/v1/auth/verify-email/${token}`;
+      const verificationLink = `${req.protocol}://${req.headers.host}/api/v1/auth/student/verify-email/${token}`;
       const emailContent = `
       <p><a href="${verificationLink}">قم بالضغط هنا </a> لتأكيد الحساب.</p>
     `;
