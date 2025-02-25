@@ -39,7 +39,7 @@ export const signup = async (req, res) => {
       });
       const verificationLink = `${req.protocol}://${req.headers.host}/api/v1/auth/verify-email/${token}`;
       const emailContent = `
-      <p>قم بالضغط <a href="${verificationLink}" target="_blank">هنا</a> لتأكيد الحساب.</p>
+      <p><a href="${verificationLink}">قم بالضغط هنا </a> لتأكيد الحساب.</p>
     `;
     await sendEmail(email, "تأكيد الحساب", emailContent);
       res.status(201).json({
