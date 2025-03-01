@@ -5,12 +5,17 @@ import { update } from "../validations/chapterValidation.js";
 export const addYear = async (req, res) => {
   try {
     const { year, subjects } = req.body;
-
     // التحقق من وجود السنة واسم المواد
     if (!year || !subjects || !Array.isArray(subjects)) {
       return res.status(400).json({
         message: "اسم السنه والمواد الدراسيه مطلوبه",
       });
+    }
+    const foundYear = await SchoolYear.findOne({ year });
+    if (foundYear) {
+      return res
+        .status(400)
+        .json({ message: "هذه السنه الدراسيه موجوده مسبقا" });
     }
 
     // البحث عن المواد من خلال أسمائها
@@ -27,7 +32,7 @@ export const addYear = async (req, res) => {
         message: `The following subjects were not found: ${notFound.join(",")}`,
       });
     }
- 
+
     // الحصول على IDs المواد
     const subjectIds = foundSubjects.map((subject) => subject._id);
 
@@ -46,14 +51,14 @@ export const addYear = async (req, res) => {
 };
 // =================================================
 export const updateYear = async (req, res) => {
-  const { subjects,year } = req.body;
+  const { subjects, year } = req.body;
   const { id } = req.params;
 
   const findYear = await SchoolYear.findById(id);
   if (!findYear) {
     res.status(404).json({ message: "هذه السنه الدراسيه غير موجوده" });
   }
-  
+
   if (subjects) {
     // البحث عن المواد من خلال أسمائها
     const foundSubjects = await Subject.find({ name: { $in: subjects } });
@@ -69,12 +74,14 @@ export const updateYear = async (req, res) => {
         message: `The following subjects were not found: ${notFound.join(",")}`,
       });
     }
-    findYear.subjectIds=foundSubjects.map((subject) => subject._id);
+    findYear.subjectIds = foundSubjects.map((subject) => subject._id);
   }
   if (year) {
-    findYear.year=year
+    findYear.year = year;
   }
-  const newYear=await SchoolYear.findByIdAndUpdate(id,findYear,{new:true})
+  const newYear = await SchoolYear.findByIdAndUpdate(id, findYear, {
+    new: true,
+  });
   return res.status(201).json({
     message: "Year updated successfully.",
     year: newYear,
