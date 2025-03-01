@@ -5,20 +5,31 @@ import { Student } from "../../../DB/model/Student.js";
 import { sendEmail } from "../../utils/emailService.js";
 
 export const signup = async (req, res) => {
-  const { name, email, phone, fatherPhone, password, year, division, section } =
-    req.body;
-    const profilePicture = req.files?.profilePicture.path || null;
+  const {
+    name,
+    email,
+    phone,
+    fatherPhone,
+    password,
+    year,
+    city,
+    address,
+    stage,
+    educationType,
+    section,
+  } = req.body;
+  const profilePicture = req.files?.profilePicture.path || null;
 
   try {
     const schoolYear = await SchoolYear.findOne({ year });
     if (!schoolYear) {
-      res.status(404).json({ message: "the school year is not found" });
+      res.status(404).json({ message: "هذه السنه الدراسيه غير موجوده" });
     }
 
     if (phone === fatherPhone) {
       res
         .status(404)
-        .json({ message: "your phone Not equal your parent Phone" });
+        .json({ message: "رقم الطالب يجب ان يكون مختلف عن رقم ولي الامر" });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const newStudent = new Student({
@@ -29,9 +40,12 @@ export const signup = async (req, res) => {
         year: schoolYear._id,
         password: hashedPassword,
         isVerified: false,
-        division,
+        city,
+        address,
+        stage,
+        educationType,
         section,
-        profilePicture
+        profilePicture,
       });
       await newStudent.save();
       const token = jwt.sign({ id: newStudent._id }, process.env.emailToken, {
@@ -41,7 +55,7 @@ export const signup = async (req, res) => {
       const emailContent = `
       <p><a href="${verificationLink}">قم بالضغط هنا </a> لتأكيد الحساب.</p>
     `;
-    await sendEmail(email, "تأكيد الحساب", emailContent);
+      await sendEmail(email, "تأكيد الحساب", emailContent);
       res.status(201).json({
         message:
           "تم انشاء الحساب بنجاح برجاء الذهاب الي بريدك الالكتروني لتاكيد الحساب ",
@@ -66,7 +80,7 @@ export const confirmEmail = async (req, res) => {
     await student.save();
     res.writeHead(302, { Location: "https://go-learn-henna.vercel.app/Login" });
     res.end();
-    } catch (err) {
+  } catch (err) {
     res.status(500).json({ message: "Invalid or expired token" });
   }
 };
@@ -149,7 +163,7 @@ export const resetPassword = async (req, res) => {
 // -------------------------------------------------
 
 export const updateProfile = async (req, res) => {
-  const { name, phone, fatherPhone, year  } = req.body;
+  const { name, phone, fatherPhone, year } = req.body;
   const profilePicture = req.files?.profilePicture.path || null;
 
   try {
@@ -162,15 +176,13 @@ export const updateProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     const yearId = schoolYear._id;
-    
-    
+
     await Student.findByIdAndUpdate(req.student.id, {
       name,
       phone,
       fatherPhone,
-      year:yearId,
-      profilePicture
-      
+      year: yearId,
+      profilePicture,
     });
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (err) {

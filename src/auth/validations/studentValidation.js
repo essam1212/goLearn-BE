@@ -10,6 +10,30 @@ export const signUpValidation = {
         "string.min": "اسم المستخدم يجب أن يحتوي على 3 أحرف على الأقل",
         "any.required": "اسم المستخدم مطلوب",
       }),
+      city: Joi.string().min(3).max(20).required().messages({
+        "string.empty": "اسم المستخدم لا يمكن أن يكون فارغاً",
+        "any.required": "اسم المستخدم مطلوب",
+      }),
+      address: Joi.string().min(3).max(20).required().messages({
+        "string.base": "عنوان المستخدم يجب أن يكون نصاً",
+        "string.empty": "عنوان المستخدم لا يمكن أن يكون فارغاً",
+        "string.min": "عنوان المستخدم يجب أن يحتوي على 3 أحرف على الأقل",
+        "any.required": "عنوان المستخدم مطلوب",
+      }),
+      stage: Joi.string().valid("اعدادي", "ثانوي").required().messages({
+        "any.required": "المرحله الدراسيه مطلوبه",
+      }),
+      educationType: Joi.string().valid("عام", "ازهر").required().messages({
+        "any.required": "نوع التعليم مطلوب",
+      }),
+      section: Joi.string().when("stage", {
+        is: "ثانوي",  
+        then: Joi.string().valid("علمي", "ادبي", "علمي علوم", "علمي رياضة").required().messages({
+          "any.required": "القسم مطلوب",
+        }),
+      }),
+
+
       year: Joi.string().required().messages({
         "any.required": " السنه الدراسيه مطلوبه",
 
@@ -49,12 +73,13 @@ export const signUpValidation = {
           "string.empty": "رقم الهاتف الخاص بولي الامر لا يمكن أن يكون فارغاً",
           "string.pattern.base": "رقم الهاتف يجب أن يتكون من 11 رقم ويبدا ب 01",
         }),
-      password: Joi.string().min(8).required().messages({
-        "string.base": " كلمة المرور يجب أن تكون نص وارقام",
-        "string.empty": "كلمة المرور لا يمكن أن تكون فارغة",
-        "string.min": "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل",
-        "any.required": "كلمة المرور مطلوبة",
-      })
+        password: Joi.string()
+        .pattern(new RegExp("^[a-zA-Z0-9]{8,}$")) // لازم تكون حروف وأرقام وأقل حاجة 8 حروف
+        .required()
+        .messages({
+          "string.pattern.base": "❌ كلمة السر يجب أن تحتوي على حروف وأرقام فقط، وألا تقل عن 8 حروف.",
+          "string.empty": "❌ كلمة السر مطلوبة!",
+        }),
      
     }),
 };
@@ -76,12 +101,13 @@ export const loginValidation = {
           "any.required": "البريد الإلكتروني مطلوب",
         }),
 
-      password: Joi.string().min(8).required().messages({
-        "string.base": " كلمة المرور يجب أن تكون نص وارقام",
-        "string.empty": "كلمة المرور لا يمكن أن تكون فارغة",
-        "string.min": "كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل",
-        "any.required": "كلمة المرور مطلوبة",
-      }),
+        password: Joi.string()
+        .pattern(new RegExp("^[a-zA-Z0-9]{8,}$")) // لازم تكون حروف وأرقام وأقل حاجة 8 حروف
+        .required()
+        .messages({
+          "string.pattern.base": "❌ كلمة السر يجب أن تحتوي على حروف وأرقام فقط، وألا تقل عن 8 حروف.",
+          "string.empty": "❌ كلمة السر مطلوبة!",
+        }),
     }),
 };
 // ................................................................

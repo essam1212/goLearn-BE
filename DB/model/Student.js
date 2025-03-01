@@ -1,9 +1,10 @@
+import { required } from "joi";
 import mongoose, { Schema, model } from "mongoose";
 
 const studentSchema = new Schema(
   {
-    name: { type: String, required: true, unique:true},
-    email: { type: String, unique: true, required: true },
+    name: { type: String, required: true,unique:true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     year: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,17 +14,31 @@ const studentSchema = new Schema(
     profilePicture:{
       type:String
     },
-    division: { type: String, enum: ["عام", "ازهري"], required: true },
-    section: { type: String, enum: ["علمي", "ادبي",] }, 
-
+    stage: {
+      type: String,
+      enum: ["اعدادي", "ثانوي"],
+      required: true,
+    },
+    educationType: { type: String, enum: ["عام", "ازهر"], required: true },
+    section:  {
+      type: String,
+      enum: ["علمي", "ادبي", "علمي علوم", "علمي رياضة"],
+      required: function () {
+        return this.stage === "ثانوي"; // التخصص مطلوب فقط للمرحلة الثانوية
+      },
+    } ,
     phone: { 
       type: String,
-      unique: [true, "هذا الرقم مستخدم من قبل ادخل رقم اخر"],
+      required  : true,
+      unique: true,
     },
     fatherPhone: {
       type: String,
-      unique: [true, "هذا الرقم مستخدم من قبل ادخل رقم اخر"],
+      required: true,
+      unique: true,
     },
+    city: { type: String, required: true },
+    address: { type: String, required: true },
    
 
     isVerified: { type: Boolean, default: false }, // حالة تأكيد البريد الإلكتروني
