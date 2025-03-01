@@ -1,4 +1,3 @@
-import { required } from "joi";
 import mongoose, { Schema, model } from "mongoose";
 
 const studentSchema = new Schema(
