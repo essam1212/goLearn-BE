@@ -163,13 +163,22 @@ export const resetPassword = async (req, res) => {
 // -------------------------------------------------
 
 export const updateProfile = async (req, res) => {
-  const { name, phone, fatherPhone, year } = req.body;
+  const {
+    name,
+    phone,
+    fatherPhone,
+    year,
+    city,
+    address,
+    stage,
+    educationType,
+    section,
+  } = req.body;
   const profilePicture = req.files?.profilePicture.path || null;
 
   try {
     const student = await Student.findById(req.student.id); // تأكد من أنك تستخدم Middleware للتحقق من التوكن
-    
-   
+
     if (!student) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -180,7 +189,9 @@ export const updateProfile = async (req, res) => {
     if (year) {
       const schoolYear = await SchoolYear.findOne({ year });
       if (!schoolYear) {
-        return res.status(404).json({ message: "The school year is not found" });
+        return res
+          .status(404)
+          .json({ message: "The school year is not found" });
       }
       yearId = schoolYear._id;
     }
@@ -190,6 +201,11 @@ export const updateProfile = async (req, res) => {
       fatherPhone,
       year: yearId,
       profilePicture,
+      city,
+      address,
+      stage,
+      educationType,
+      section,
     });
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (err) {
