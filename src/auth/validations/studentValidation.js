@@ -44,8 +44,7 @@ export const signUpValidation = {
       .messages({
         'string.uri': 'رابط الـ img يجب أن يكون صالحاً.',
       }),
-      division: Joi.string().required(),
-      section: Joi.string(),
+      
       email: Joi.string()
         .email()
         .pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
