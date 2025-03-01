@@ -7,7 +7,7 @@ import { SchoolYear } from "../../../DB/model/SchoolYear.js";
 export const signup = async (req, res) => {
   const { name, email, phone, password, accessibleTo, subjectName, years } =
     req.body;
-  try {
+  // try {
     if (!years || !Array.isArray(years)) {
       return res.status(400).json({
         message: "اسم السنين الدراسيه مطلوب",
@@ -27,7 +27,7 @@ export const signup = async (req, res) => {
     const yearsId=yearsData.map((year)=>year._id)
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const subject = await Subject.findOne({ name: subjectName });
+    const subject = await Subject.find({ name: { $in: subjectName } });
     const newTeacher = new Teacher({
       name,
       email,
@@ -39,15 +39,15 @@ export const signup = async (req, res) => {
     });
     await newTeacher.save();
 
-    await Subject.findOneAndUpdate(
+    await Subject.findOneAndUpdate( 
       { name: subjectName },
       { $push: { teachers: newTeacher._id } }
     );
 
     res.status(201).json({ message: "تم انشاء الحساب بنجاح " });
-  } catch (err) {
-    res.status(500).json({ message: "Error creating student", err });
-  }
+  // } catch (err) {
+  //   res.status(500).json({ message: "Error creating teacher", err });
+  // }
 };
 
 // ---------------------------------------------------------------------------

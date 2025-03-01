@@ -168,15 +168,22 @@ export const updateProfile = async (req, res) => {
 
   try {
     const student = await Student.findById(req.student.id); // تأكد من أنك تستخدم Middleware للتحقق من التوكن
-    const schoolYear = await SchoolYear.findOne({ year });
-    if (!schoolYear) {
-      res.status(404).json({ message: "the school year is not found" });
-    }
+    
+   
     if (!student) {
       return res.status(404).json({ message: "User not found" });
     }
-    const yearId = schoolYear._id;
 
+    let yearId = student.year; // افتراضياً السنة الدراسية القديمة
+
+    // لو الطالب حب يغير السنة الدراسية
+    if (year) {
+      const schoolYear = await SchoolYear.findOne({ year });
+      if (!schoolYear) {
+        return res.status(404).json({ message: "The school year is not found" });
+      }
+      yearId = schoolYear._id;
+    }
     await Student.findByIdAndUpdate(req.student.id, {
       name,
       phone,
