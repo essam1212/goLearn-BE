@@ -55,7 +55,8 @@ export const signup = async (req, res) => {
       const emailContent = `
       <p><a href="${verificationLink}">قم بالضغط هنا </a> لتأكيد الحساب.</p>
     `;
-      await sendEmail(email, "تأكيد الحساب", emailContent);
+      await sendEmail(email, "تأكيد الحساب", emailContent).then(() => console.log('✅ إيميل التفعيل تم إرساله'))
+      .catch(err => console.error('❌ خطأ في إرسال الإيميل:', err));
       res.status(201).json({
         message:
           "تم انشاء الحساب بنجاح برجاء الذهاب الي بريدك الالكتروني لتاكيد الحساب ",
