@@ -6,7 +6,8 @@
     import * as indexRouter from './src/index.router.js';
 
     dotenv.config();
-
+    console.log("API KEY:", process.env.MAILJET_API_KEY);
+    console.log("SECRET:", process.env.MAILJET_SECRET_KEY);
     export const app = express();
     const PORT = process.env.PORT||3000 ;
 
