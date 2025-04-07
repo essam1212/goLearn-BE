@@ -22,3 +22,4 @@ export const sendEmail = async (to, subject, htmlContent) => {
     throw error;
   }
 };
+    
