@@ -23,7 +23,7 @@ export const signup = async (req, res) => {
   try {
     const schoolYear = await SchoolYear.findOne({ year });
     if (!schoolYear) {
-      return res.status(404).json({ message: "هذه السنه الدراسيه غير موجوده" });
+     res.status(404).json({ message: "هذه السنه الدراسيه غير موجوده" });
     }
 
     if (phone === fatherPhone) { 
