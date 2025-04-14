@@ -18,7 +18,6 @@ export const signup = async (req, res) => {
     educationType,
     section,
   } = req.body;
-  const profilePicture = req.files?.profilePicture.path || null;
 
   try {
     const schoolYear = await SchoolYear.findOne({ year });
@@ -31,6 +30,31 @@ export const signup = async (req, res) => {
         .status(404)
         .json({ message: "رقم الطالب يجب ان يكون مختلف عن رقم ولي الامر" });
     } else {
+      let profilePicture = null;
+
+      if (req.file) {
+        const streamUpload = (buffer) => {
+          return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: "students",
+              },
+              (error, result) => {
+                if (result) {
+                  resolve(result);
+                } else {
+                  reject(error);
+                }
+              }
+            );
+            stream.end(buffer);
+          });
+        };
+  
+        const uploadResult = await streamUpload(req.file.buffer);
+        profilePicture = uploadResult.secure_url;
+      }
+  
       const hashedPassword = await bcrypt.hash(password, 10);
       const newStudent = new Student({
         name,
