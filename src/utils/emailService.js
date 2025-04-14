@@ -2,7 +2,7 @@
 import SibApiV3Sdk from 'sib-api-v3-sdk';
 
 
-const sendEmail = async (to, subject, htmlContent) => {
+export const sendEmail = async (to, subject, htmlContent) => {
   const client = SibApiV3Sdk.ApiClient.instance;
   const apiKey = client.authentications['api-key'];
   apiKey.apiKey = process.env.BREVO_API_KEY;
@@ -19,4 +19,4 @@ const sendEmail = async (to, subject, htmlContent) => {
   return apiInstance.sendTransacEmail(emailData);
 };
 
-export default sendEmail;
+
