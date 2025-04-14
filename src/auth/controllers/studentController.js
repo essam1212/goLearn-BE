@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
         email,
         phone,
         fatherPhone,
-        year: schoolYear._id,
+        year: schoolYear._id, 
         password: hashedPassword,
         isVerified: false,
         city,
