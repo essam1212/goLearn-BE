@@ -41,7 +41,7 @@ export const signup = async (req, res) => {
         password: hashedPassword,
         isVerified: false,
         city,
-        address,
+        address,     
         stage,
         educationType,
         section,
