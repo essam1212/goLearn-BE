@@ -6,7 +6,7 @@ import { studentAccess } from '../../middleware/authMiddleware.js';
 import { upload } from '../../utils/mailer.js';
 
 const router = express.Router();
-router.post('/signup',validation(signUpValidation),upload.single("profilePicture"),registerControl.signup)
+router.post('/signup',upload.single("profilePicture"),registerControl.signup)
 router.get('/verify-email/:token',registerControl.confirmEmail)
 router.post('/login',validation(loginValidation),registerControl.login)
 router.post('/forgot-password',registerControl.forgotPassword)
