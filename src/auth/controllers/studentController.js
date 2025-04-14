@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
       return res.status(404).json({ message: "هذه السنه الدراسيه غير موجوده" });
     }
 
-    if (phone === fatherPhone) {
+    if (phone === fatherPhone) { 
       res
         .status(404)
         .json({ message: "رقم الطالب يجب ان يكون مختلف عن رقم ولي الامر" });
