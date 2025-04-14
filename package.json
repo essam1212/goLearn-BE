@@ -81,6 +81,9 @@
   "nodemon": "^3.1.9",
  
    
+  "sib-api-v3-sdk": "^8.5.0",
+ 
+   
   "string-similarity": "^4.0.4",
  
    
