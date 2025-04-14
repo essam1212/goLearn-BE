@@ -1,25 +1,20 @@
-import mailjet from 'node-mailjet';
-import 'dotenv/config'; // تأكد إنها في الأعلى
+// utils/sendEmail.js
+import SibApiV3Sdk from 'sib-api-v3-sdk';
 
-const mailjetClient = mailjet.apiConnect(process.env.MAILJET_API_KEY, process.env.MAILJET_SECRET_KEY);
+const sendEmail = async (to, subject, htmlContent) => {
+  const client = SibApiV3Sdk.ApiClient.instance;
+  const apiKey = client.authentications['api-key'];
+  apiKey.apiKey = process.env.BREVO_API_KEY;
 
-export const sendEmail = async (to, subject, htmlContent) => {
-  try {
-    const result = await mailjetClient
-      .post('send')
-      .request({
-        FromEmail: process.env.MAILJET_EMAIL, // لازم يكون الإيميل اللي موثق عندك في Mailjet
-        FromName: 'Go Learn',
-        Subject: subject,
-        'Text-part': htmlContent,
-        Recipients: [{ Email: to }],
-      });
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
-    console.log('✅ Email sent:', result.body);
-    return result.body;
-  } catch (error) {
-    console.error('❌ Error sending email:', error);
-    throw error;
-  }
+  const emailData = {
+    sender: { name: 'اسم المنصة', email: 'essam5ali2000@gmail.com' }, 
+    subject,
+    htmlContent,
+  };
+
+  return apiInstance.sendTransacEmail(x);
 };
-    
+
+export default sendEmail;
