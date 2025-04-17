@@ -7,7 +7,7 @@ import { SchoolYear } from "../../../DB/model/SchoolYear.js";
 export const signup = async (req, res) => {
   const { name, email, phone, password, accessibleTo, subjectName, years } =
     req.body;
-  // try {
+  try {
     if (!years || !Array.isArray(years)) {
       return res.status(400).json({
         message: "اسم السنين الدراسيه مطلوب",
@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
     const notFound = foundYears.filter(
       (yearTitle) => !foundYears.includes(yearTitle)
     );
-    if (notFound.length > 0) {
+    if (notFound.length > 0) { 
       return res.status(404).json({
         message: `The following years were not found: ${notFound.join(",")}`,
       });
@@ -45,9 +45,9 @@ export const signup = async (req, res) => {
     );
 
     res.status(201).json({ message: "تم انشاء الحساب بنجاح " });
-  // } catch (err) {
-  //   res.status(500).json({ message: "Error creating teacher", err });
-  // }
+  } catch (err) {
+    res.status(500).json({ message: "Error creating teacher", err });
+  }
 };
 
 // ---------------------------------------------------------------------------
